@@ -1,7 +1,9 @@
-package com.databazoo.controllers;
+package com.databazoo.controller;
 
 import com.databazoo.bo.Superhero;
+import com.databazoo.service.SuperheroService;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,9 @@ public class SuperheroController {
 
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(SuperheroController.class);
 
+    @Autowired
+    private SuperheroService service;
+
     /**
      * List all
      *
@@ -28,10 +32,7 @@ public class SuperheroController {
      */
     @GetMapping("/superhero")
     public List<Superhero> getList() {
-
-        // TODO
-
-        List<Superhero> list = Arrays.asList(new Superhero("t1"), new Superhero("t2"));
+        List<Superhero> list = service.listAll();
         LOG.info("Listing all " + list.size() + " elements");
         return list;
     }
